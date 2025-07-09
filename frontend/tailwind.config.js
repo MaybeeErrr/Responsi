@@ -1,4 +1,3 @@
-// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 export default {
 content: [
@@ -15,7 +14,9 @@ keyframes: {
 'fade-in': { '0%': { opacity: '0' }, '100%': { opacity: '1' }, },
 },
 animation: {
-'slide-in-left': 'slide-in-left 0.7s ease-out forwards','slide-in-right': 'slide-in-right 0.7s ease-out forwards',
+'slide-in-left': 'slide-in-left 0.7s ease-out forwards',
+
+'slide-in-right': 'slide-in-right 0.7s ease-out forwards',
 'fade-in': 'fade-in 0.5s ease-out forwards',
 }
 },

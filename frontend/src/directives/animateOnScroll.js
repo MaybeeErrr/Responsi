@@ -1,4 +1,3 @@
-// src/directives/animateOnScroll.js
 const animatedScrollObserver = new IntersectionObserver(
 (entries, observer) => {
 entries.forEach((entry) => {
