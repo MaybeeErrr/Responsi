@@ -17,7 +17,7 @@ Hubungi Saya
 </a>
 </div>
 <div class="md:w-1/2 flex justify-center animate-slide-in-right">
-<img src="D:\TUGAS ALL SEMESTER\SEMESTER 4\web\Responsi\frontend\src\components\IMG-20240615-WA0022[1].jpg" alt="Foto Profil" class="w-80 h-80 rounded-full
+<img src="D:\EROKK 5482\Responsi\frontend\public\img\IMG-20240615-WA0022[1].jpg" alt="Foto Profil" class="w-80 h-80 rounded-full
 object-cover shadow-lg">
 </div>
 </section>
