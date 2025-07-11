@@ -1,51 +1,76 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
-import SectionTitle from './SectionTitle.vue'; // Asumsi Anda punya komponen
-const educationHistory = ref([]);
-const API_URL = import.meta.env.PROD ? '/api/education' :
-'http://localhost:3000/api/education';
-onMounted(async () => {
-try {
-const response = await axios.get(API_URL);
-educationHistory.value = response.data;
-} catch (error) {
-console.error('Gagal mengambil data pendidikan:', error);
-}
-});
+import { ref } from 'vue';
+// Axios dan onMounted tidak diperlukan lagi untuk data statis, jadi kita hapus.
+// import axios from 'axios';
+// import { onMounted } from 'vue';
+import SectionTitle from './SectionTitle.vue';
+
+// Ganti pengambilan data API dengan data statis langsung di sini.
+// Urutkan dari yang terbaru (kuliah) ke yang terlama (SMA).
+const educationHistory = ref([
+  {
+    id: 1,
+    period: '2023 - Sekarang',
+    institution: 'Universitas Amikom Yogyakarta',
+    major: 'S1 - Informatika'
+  },
+  {
+    id: 2,
+    period: '2020 - 2023',
+    institution: 'SMK Leonardo Klaten',
+    major: 'TITL (Teknik Instalasi Tenaga Listrik)'
+  },
+
+]);
+
+
 </script>
+
 <template>
-<section id="pendidikan" class="py-20 bg-white">
-<div class="container mx-auto px-6">
-<SectionTitle title="Riwayat Pendidikan" />
-<div class="relative">
-<div class="absolute h-full border-r-2 border-gray-300" style="left: 50%;"></div>
-<div v-for="(edu, index) in educationHistory" :key="edu.id" class="mb-8 flex justify-between
-items-center w-full">
-<div v-if="index % 2 === 0" class="w-full flex">
-<div class="w-1/2 pr-8 text-right"><p class="font-semibold text-blue-600">{{ edu.period
+  <section id="pendidikan" class="py-20 bg-white sm:py-24">
+    <div class="container mx-auto px-6">
+      <SectionTitle title="Riwayat Pendidikan" />
 
-}}</p><h3 class="text-2xl font-bold text-gray-800">{{ edu.institution }}</h3><p class="text-gray-
-600">{{ edu.major }}</p></div>
+      <!-- Timeline Container -->
+      <div class="relative max-w-3xl mx-auto mt-12">
+        <!-- Garis Vertikal Timeline -->
+        <!-- Disesuaikan agar lebih baik di mobile -->
+        <div class="absolute w-1 bg-blue-200 h-full left-4 transform -translate-x-1/2 md:left-1/2"></div>
 
-<div class="w-1/2 flex justify-start"><div class="w-4 h-4 bg-blue-600 rounded-full z-
-10"></div></div>
+        <!-- Loop untuk setiap item pendidikan -->
+        <div v-for="(edu, index) in educationHistory" :key="edu.id" class="mb-10 relative">
 
-</div>
+          <!-- Wrapper untuk layout kiri-kanan di desktop -->
+          <div class="md:flex" :class="index % 2 === 0 ? 'md:flex-row-reverse' : ''">
 
-<div v-else class="w-full flex">
+            <!-- Bagian Kosong (untuk spacing di desktop) -->
+            <div class="w-1/2 hidden md:block"></div>
 
-<div class="w-1/2 flex justify-end"><div class="w-4 h-4 bg-blue-600 rounded-full z-
-10"></div></div>
+            <!-- Kartu Konten -->
+            <div class="w-full md:w-1/2 md:pr-10" :class="index % 2 === 0 ? 'md:pr-0 md:pl-10' : ''">
+              <div class="pl-12 md:pl-0 relative">
+                <!-- Titik pada Timeline -->
+                <div class="absolute w-5 h-5 bg-white border-4 border-blue-600 rounded-full top-1 -left-8 transform -translate-x-1/2 md:left-auto" :class="index % 2 === 0 ? 'md:-right-12 md:translate-x-1/2' : 'md:-left-12 md:-translate-x-1/2'"></div>
 
-<div class="w-1/2 pl-8 text-left"><p class="font-semibold text-blue-600">{{ edu.period
+                <!-- Konten Teks -->
+                <div class="bg-gray-50 rounded-lg shadow-md p-6">
+                  <p class="font-semibold text-blue-600 text-sm mb-1">{{ edu.period }}</p>
+                  <h3 class="text-xl font-bold text-gray-800 mb-2">{{ edu.institution }}</h3>
+                  <p class="text-gray-600">{{ edu.major }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-}}</p><h3 class="text-2xl font-bold text-gray-800">{{ edu.institution }}</h3><p class="text-gray-
-600">{{ edu.major }}</p></div>
-
-</div>
-</div>
-</div>
-</div>
-</section>
+      </div>
+    </div>
+  </section>
 </template>
+
+<style scoped>
+/* Menambahkan sedikit transisi untuk efek yang lebih halus */
+.relative {
+  transition: all 0.3s ease-in-out;
+}
+</style>

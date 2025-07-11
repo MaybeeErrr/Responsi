@@ -1,30 +1,27 @@
 const express = require('express');
 const cors = require('cors');
-// Untuk sementara kita ambil dari data.js. Nanti ini akan dihapus.
+const path = require('path');
 const { educationHistory, skills, projects } = require('./data');
 
 const app = express();
-app.use(cors());
-
-// Endpoint untuk mendapatkan data pendidikan
-app.get('/api/education', (req, res) => {
-  res.json(educationHistory);
-});
-
-// Endpoint untuk mendapatkan data skill
-app.get('/api/skills', (req, res) => {
-  res.json(skills);
-});
-
-// Endpoint untuk mendapatkan data proyek
-app.get('/api/projects', (req, res) => {
-  res.json(projects);
-});
-
-// Baris ini penting agar Vercel bisa menjalankan backend Anda
-module.exports = app;
-
 const PORT = 3000;
+
+app.use(cors());
+app.use(express.json());
+
+app.get('/api/education', (req, res) => res.json(educationHistory));
+app.get('/api/skills', (req, res) => res.json(skills));
+app.get('/api/projects', (req, res) => res.json(projects));
+
+// Serve frontend static files
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+// Fallback to index.html for SPA
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api/')) return next();
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
+
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+console.log(` Server backend berjalan di http://localhost:${PORT}`);
 });
